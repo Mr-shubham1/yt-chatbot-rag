@@ -69,7 +69,7 @@ if video_url:
             st.error("transcript not found");
             st.session_state.transcript = None;
         except Exception as e:
-            st.error("error: ",e);
+            st.error("error: {e}");
             st.session_state.transcript = None;
     else:
         st.session_state.transcript = None;
@@ -134,3 +134,4 @@ if video_url:
             st.info("please enter a query");
 else:
     st.info("Please enter Youtube video url to start conversation with the video")
+
