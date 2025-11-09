@@ -1,4 +1,5 @@
 from youtube_transcript_api import YouTubeTranscriptApi,TranscriptsDisabled
+from youtube_transcript_api.proxies import WebshareProxyConfig
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_huggingface import ChatHuggingFace,HuggingFaceEndpoint,HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -60,7 +61,12 @@ if video_url:
         try:
             if st.session_state.transcript is None or st.session_state.get("last_video_id") != video_id:
                 with st.spinner("Fetching transcript of the video..."):
-                    yt_api = YouTubeTranscriptApi()
+                    yt_api = YouTubeTranscriptApi(
+                        proxy_config=WebshareProxyConfig(
+                            proxy_username="kczwzxaz",
+                            proxy_password="85x4tv39bgy8",
+                        )
+                    )
                     transcript_list = yt_api.fetch(video_id=video_id, languages=['en', 'hi'])
                     st.session_state.transcript = " ".join(chunk.text for chunk in transcript_list)
                     st.session_state.last_video_id = video_id
@@ -134,5 +140,6 @@ if video_url:
             st.info("please enter a query");
 else:
     st.info("Please enter Youtube video url to start conversation with the video")
+
 
 
